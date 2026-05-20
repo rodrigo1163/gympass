@@ -1,0 +1,38 @@
+{
+  "name": "gympass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigo1163/gympass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodrigo1163/gympass/issues"
+  },
+  "homepage": "https://github.com/rodrigo1163/gympass#readme",
+  "devDependencies": {
+    "@biomejs/biome": "2.4.15",
+    "@types/node": "25.9.1",
+    "tsup": "8.5.1",
+    "tsx": "4.22.3",
+    "typescript": "6.0.3"
+  },
+  "dependencies": {
+    "@fastify/cors": "11.2.0",
+    "dotenv": "17.4.2",
+    "fastify": "5.8.5",
+    "zod": "4.4.3"
+  }
+}
