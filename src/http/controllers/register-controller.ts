@@ -32,7 +32,7 @@ export async function registerController(
       })
     }
 
-    return reply.status(500).send()
+    throw error
   }
 
   return reply.status(201).send()
