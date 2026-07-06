@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma'
 import type { UserCreateInput } from '../../../../prisma/generated/prisma/models'
+import { prisma } from '../../../lib/prisma'
 import type { UsersRepository } from '../users-repository'
 
 export class PrismaUsersReposity implements UsersRepository {
