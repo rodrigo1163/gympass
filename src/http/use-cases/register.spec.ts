@@ -1,17 +1,22 @@
 import { compare } from 'bcryptjs'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryUsersRepository } from '../repositories/in-memory/in-memory-users-repository'
 import { UserAlreadyExistsError } from './erros/user-already-exists-error'
 import { RegisterUseCase } from './register-use-case'
 
 // Unit testing
 
-describe('Register Use Case', () => {
-  it('should be able to register', async () => {
-    const prismaUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(prismaUsersRepository)
+let usersRepository: InMemoryUsersRepository
+let sut: RegisterUseCase
 
-    const { user } = await registerUseCase.execute({
+describe('Register Use Case', () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    sut = new RegisterUseCase(usersRepository)
+  })
+
+  it('should be able to register', async () => {
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
@@ -19,11 +24,9 @@ describe('Register Use Case', () => {
 
     expect(user.id).toEqual(expect.any(String))
   })
-  it('should hash user password upon registration', async () => {
-    const prismaUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(prismaUsersRepository)
 
-    const { user } = await registerUseCase.execute({
+  it('should hash user password upon registration', async () => {
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
@@ -36,26 +39,23 @@ describe('Register Use Case', () => {
 
     expect(isPasswordCorrectlyHashed).toBe(true)
   })
+
   it('should not be able to register with same email twice', async () => {
-    const prismaUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(prismaUsersRepository)
 
     const email = 'johndoe@example.com'
 
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'John Doe',
       email,
       password: '123456',
     })
 
     await expect(() =>
-      registerUseCase.execute({
+      sut.execute({
         name: 'John Doe',
         email,
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
-
-
   })
 })
