@@ -2,7 +2,7 @@ import type { UserCreateInput } from '../../../../prisma/generated/prisma/models
 import { prisma } from '../../../lib/prisma'
 import type { UsersRepository } from '../users-repository'
 
-export class PrismaUsersReposity implements UsersRepository {
+export class PrismaUsersRepository implements UsersRepository {
   async findById(id: string) {
     const user = await prisma.user.findUnique({
       where: {
