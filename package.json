@@ -30,14 +30,14 @@
     "@biomejs/biome": "2.4.15",
     "@types/node": "25.9.1",
     "@types/pg": "8.20.0",
-    "@vitest/coverage-v8": "4.1.9",
-    "@vitest/ui": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/ui": "^4.1.10",
     "prisma": "7.8.0",
     "tsup": "8.5.1",
     "tsx": "4.22.3",
     "typescript": "6.0.3",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "@fastify/cors": "11.2.0",
