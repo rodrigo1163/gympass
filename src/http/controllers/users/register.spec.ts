@@ -6,7 +6,7 @@ describe('Register (e2e)', () => {
   let app: FastifyInstance
 
   beforeAll(async () => {
-    const { app: server } = await import('../../app.js')
+    const { app: server } = await import('../../../app.js')
     app = server
     await app.ready()
   })
