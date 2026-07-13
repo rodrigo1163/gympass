@@ -27,7 +27,7 @@ describe('Nearby Gyms (e2e)', () => {
         description: 'Some description',
         phone: '1234567890',
         latitude: -3.112425049934371,
-        longitude: -59.95727487702569,
+        longitude: -59.95727487702562,
     })
 
     await request(app.server)
@@ -45,11 +45,10 @@ describe('Nearby Gyms (e2e)', () => {
         .get('/gyms/nearby')
         .query({
             latitude: -3.112425049934371,
-            longitude: -59.95727487702569,
+            longitude: -59.95727487702555,
         })
         .set('Authorization', `Bearer ${token}`)
         .send()
-    console.log(response.body)
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(1)

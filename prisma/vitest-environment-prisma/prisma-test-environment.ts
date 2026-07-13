@@ -37,8 +37,6 @@ export default <Environment>{
     const schema = randomUUID()
     const databaseUrl = generateDatabaseUrl(schema)
 
-    console.log('[setup] schema:', schema)
-
     process.env.DATABASE_URL = databaseUrl
 
     execSync('npx prisma db push')
