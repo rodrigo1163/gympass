@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import z from 'zod'
+import { env } from '../../../env'
 import { InvalidCredentialsError } from '../../../use-cases/erros/invalid-credentials-error'
 import { makeAuthenticateUseCase } from '../../../use-cases/factories/make-authenticate-use-case'
 
@@ -28,7 +29,22 @@ export async function authenticateController(
       }
     })
 
-    return reply.status(200).send({
+    const refreshToken = await reply.jwtSign({}, {
+      sign: {
+        sub: user.id,
+        expiresIn: '7d',
+      }
+    })
+
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: env.NODE_ENV === 'production',
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
       token
     })
   } catch (error) {
