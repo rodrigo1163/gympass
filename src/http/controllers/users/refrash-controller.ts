@@ -7,8 +7,10 @@ export async function refreshController(
 ) {
   await request.jwtVerify({ onlyCookie: true })
 
+  const { role } = request.user
+
   const token = await reply.jwtSign(
-    {},
+    { role },
     {
       sign: {
         sub: request.user.sub,
@@ -17,7 +19,7 @@ export async function refreshController(
   )
 
   const refreshToken = await reply.jwtSign(
-    {},
+    { role },
     {
       sign: {
         sub: request.user.sub,
@@ -27,14 +29,14 @@ export async function refreshController(
   )
 
   return reply
-      .setCookie('refreshToken', refreshToken, {
-        path: '/',
-        secure: env.NODE_ENV === 'production',
-        sameSite: true,
-        httpOnly: true,
-      })
-      .status(200)
-      .send({
+    .setCookie('refreshToken', refreshToken, {
+      path: '/',
+      secure: env.NODE_ENV === 'production',
+      sameSite: true,
+      httpOnly: true,
+    })
+    .status(200)
+    .send({
       token
     })
 }
