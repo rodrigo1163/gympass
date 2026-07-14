@@ -17,44 +17,44 @@ describe('Search Gyms (e2e)', () => {
   })
 
   it('should be able to search for gyms', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     await request(app.server)
-    .post('/gyms')
-    .set('Authorization', `Bearer ${token}`)
-    .send({
+      .post('/gyms')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
         title: 'JavaScript Gym',
         description: 'Some description',
         phone: '1234567890',
         latitude: -3.112425049934371,
         longitude: -59.95727487702569,
-    })
+      })
 
     await request(app.server)
-    .post('/gyms')
-    .set('Authorization', `Bearer ${token}`)
-    .send({
+      .post('/gyms')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
         title: 'Typescript Gym',
         description: 'Some description',
         phone: '1234567890',
         latitude: -3.112425049934371,
         longitude: -59.95727487702569,
-    })
+      })
 
     const response = await request(app.server)
-        .get('/gyms/search')
-        .query({
-            q: 'JavaScript',
-        })
-        .set('Authorization', `Bearer ${token}`)
-        .send()
+      .get('/gyms/search')
+      .query({
+        q: 'JavaScript',
+      })
+      .set('Authorization', `Bearer ${token}`)
+      .send()
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(1)
     expect(response.body.gyms).toEqual([
-        expect.objectContaining({
-            title: 'JavaScript Gym',
-        })
+      expect.objectContaining({
+        title: 'JavaScript Gym',
+      })
     ])
   })
 })

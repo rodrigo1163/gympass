@@ -17,18 +17,18 @@ describe('Gyms (e2e)', () => {
   })
 
   it('should be able to create a gym', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     const response = await request(app.server)
-    .post('/gyms')
-    .set('Authorization', `Bearer ${token}`)
-    .send({
+      .post('/gyms')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
         title: 'JavaScript Gym',
         description: 'Some description',
         phone: '1234567890',
         latitude: -3.112425049934371,
         longitude: -59.95727487702569,
-    })
+      })
 
     expect(response.statusCode).toEqual(201)
   })

@@ -19,12 +19,12 @@ describe('Validate Check-In (e2e)', () => {
   })
 
   it('should be able to validate a check-in', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     const { sub } = jwtDecode(token)
 
     if (!sub) {
-        throw new Error('User ID not found')
+      throw new Error('User ID not found')
     }
 
 
@@ -44,16 +44,16 @@ describe('Validate Check-In (e2e)', () => {
     })
 
     const response = await request(app.server)
-    .patch(`/check-ins/${checkIn.id}/validate`)
-    .set('Authorization', `Bearer ${token}`)
-    .send()
+      .patch(`/check-ins/${checkIn.id}/validate`)
+      .set('Authorization', `Bearer ${token}`)
+      .send()
 
     expect(response.statusCode).toEqual(204)
 
     checkIn = await prisma.checkIn.findUniqueOrThrow({
-        where: {
-            id: checkIn.id,
-        },
+      where: {
+        id: checkIn.id,
+      },
     })
 
     expect(checkIn.validated_at).toEqual(expect.any(Date))
