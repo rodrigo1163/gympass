@@ -1,0 +1,20 @@
+name: Run Unit Tests
+
+on: [push]
+
+jobs: 
+  run-unit-tests:
+    name: Run Unit Test
+    runs-on: ubuntu-latest
+    
+    steps: 
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - run: pnpm ci
+
+      - run: pnpm test
+
